@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Web Scraping Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Ensure consistent body background */
+        }
+        /* Custom scrollbar for code blocks */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e1e1e; }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #777; }
+        
+        /* Slide Control */
+        .slide {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            /* Ensure the slide content is centered */
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+        }
+        .slide--active {
+            display: flex;
+            opacity: 1;
+            position: relative;
+        }
+        .slide-content {
+             width: 100%;
+             height: 100%;
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: flex-start;
+        }
+
+        /* Better Code Block Styling */
+        pre.code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            flex-grow: 1;
+        }
+        .code-header {
+            background-color: #333;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .window-dots {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+        }
+        .dot-red { background-color: #ff5f56; }
+        .dot-yellow { background-color: #ffbd2e; }
+        .dot-green { background-color: #27c93f; }
+        .code-body {
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .token-comment { color: #6a9955; }
+        .token-keyword { color: #569cd6; }
+        .token-string { color: #ce9178; }
+        .token-function { color: #dcdcaa; }
+        .token-variable { color: #9cdcfe; }
+        .token-number { color: #b5cea8; }
+
+        /* Custom Colors for Presentation Theme */
+        .bg-teal-gradient {
+            background: linear-gradient(135deg, #0d9488 0%, #064e3b 100%);
+        }
+        .text-accent {
+            color: #0d9488;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased overflow-hidden">
+
+    <!-- Main Container -->
+    <div id="app" class="h-screen w-screen flex flex-col">
+
+        <!-- Slide Viewport -->
+        <main class="flex-1 relative flex items-center justify-center p-4 md:p-8 overflow-y-auto bg-gray-800">
+            <div id="slide-container" class="w-full max-w-6xl mx-auto bg-white text-gray-900 rounded-xl shadow-2xl overflow-hidden min-h-[85vh] flex flex-col relative">
+
+                <!-- Header/Progress Area -->
+                <div class="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-20">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-gray-400">
+                        Advanced Web Scraping & Automation Workshop
+                    </span>
+                    <span id="slide-counter" class="text-xs font-semibold text-gray-500">
+                        1 / 26
+                    </span>
+                </div>
+
+                <!-- SLIDES START HERE -->
+
+                <!-- 1: TITLE -->
+                <div class="slide flex-col text-center bg-teal-gradient text-white flex-1">
+                    <div class="mb-8">
+                        <svg class="w-24 h-24 opacity-30" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">The Web Automation Workshop</h1>
+                    <h2 class="text-2xl md:text-4xl opacity-90 mb-16 font-light">From Static Data to Large-Scale, Distributed Crawling</h2>
+                    <div class="text-xl font-semibold">
+                        <p>Tech Strategy Team</p>
+                        <p class="opacity-75 mt-2 font-normal">October 2025</p>
+                    </div>
+                </div>
+
+                <!-- 2: MOTIVATION -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">1. Why Automate Data Collection?</h2>
+                        <div class="grid grid-cols-3 gap-8 text-center">
+                            <div class="p-6 rounded-lg bg-gray-50 shadow-md border-b-4 border-teal-500">
+                                <p class="text-5xl font-extrabold text-teal-600 mb-2">95%</p>
+                                <p class="text-lg font-semibold">Efficiency Gain</p>
+                                <p class="text-gray-500 text-sm">Automate manual, repetitive copy/paste tasks.</p>
+                            </div>
+                            <div class="p-6 rounded-lg bg-gray-50 shadow-md border-b-4 border-teal-500">
+                                <p class="text-5xl font-extrabold text-teal-600 mb-2">Real-Time</p>
+                                <p class="text-lg font-semibold">Data Freshness</p>
+                                <p class="text-gray-500 text-sm">Monitor competitors, prices, and news instantly.</p>
+                            </div>
+                            <div class="p-6 rounded-lg bg-gray-50 shadow-md border-b-4 border-teal-500">
+                                <p class="text-5xl font-extrabold text-teal-600 mb-2">Scale</p>
+                                <p class="text-lg font-semibold">Massive Datasets</p>
+                                <p class="text-gray-500 text-sm">Collect millions of records inaccessible via APIs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3: ETHICS & LEGAL -->
+                <div class="slide bg-gray-50 flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">2. Ethics: The Scraper's Golden Rules</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="p-4 bg-red-100 rounded-lg border-l-4 border-red-600">
+                                <h3 class="text-2xl font-semibold text-red-700 mb-2">Respect Robots.txt</h3>
+                                <p class="text-gray-700">Always check <code>/robots.txt</code> for `Disallow` rules. If a page is disallowed, **do not scrape it.**</p>
+                            </div>
+                            <div class="p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-600">
+                                <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Minimize Server Load (Rate Limiting)</h3>
+                                <p class="text-gray-700">Use `time.sleep()` to introduce delays between requests. Treat the target server gently.</p>
+                            </div>
+                            <div class="p-4 bg-blue-100 rounded-lg border-l-4 border-blue-600">
+                                <h3 class="text-2xl font-semibold text-blue-700 mb-2">Terms of Service (TOS)</h3>
+                                <p class="text-gray-700">Scraping may violate a site's TOS. Legal status can be complex; prioritize ethical practice.</p>
+                            </div>
+                            <div class="p-4 bg-green-100 rounded-lg border-l-4 border-green-600">
+                                <h3 class="text-2xl font-semibold text-green-700 mb-2">Privacy & PII</h3>
+                                <p class="text-gray-700">Never extract **Personally Identifiable Information (PII)** or sensitive data without explicit consent.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4: THE SCRAPING WORKFLOW -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content text-center">
+                        <h2 class="text-4xl font-bold mb-12 text-accent">3. The 4-Step Scraping Pipeline</h2>
+                        <div class="flex justify-between w-full">
+                            <div class="flex-1 p-4 mx-2 border-2 border-teal-300 rounded-xl">
+                                <p class="text-3xl font-extrabold text-teal-600">1. Fetch</p>
+                                <p class="text-gray-600">Request the URL (Requests, Puppeteer).</p>
+                            </div>
+                            <div class="text-4xl font-extrabold text-gray-400 pt-3">&rarr;</div>
+                            <div class="flex-1 p-4 mx-2 border-2 border-teal-300 rounded-xl">
+                                <p class="text-3xl font-extrabold text-teal-600">2. Parse</p>
+                                <p class="text-gray-600">Isolate data using selectors (BeautifulSoup, XPath).</p>
+                            </div>
+                            <div class="text-4xl font-extrabold text-gray-400 pt-3">&rarr;</div>
+                            <div class="flex-1 p-4 mx-2 border-2 border-teal-300 rounded-xl">
+                                <p class="text-3xl font-extrabold text-teal-600">3. Clean</p>
+                                <p class="text-gray-600">Standardize data, remove noise (RegEx, Pandas).</p>
+                            </div>
+                            <div class="text-4xl font-extrabold text-gray-400 pt-3">&rarr;</div>
+                            <div class="flex-1 p-4 mx-2 border-2 border-teal-300 rounded-xl">
+                                <p class="text-3xl font-extrabold text-teal-600">4. Store</p>
+                                <p class="text-gray-600">Save to persistent storage (DB, CSV, JSON).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5: STATIC SCRAPING TOOLS -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-teal-400">4. Static Content: Requests and BeautifulSoup</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-400">Requests: The HTTP Client</h3>
+                                <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
+                                    <li>Makes simple **GET/POST** requests to receive raw HTML.</li>
+                                    <li>Handles headers, cookies, and basic authentication easily.</li>
+                                    <li>Cannot execute JavaScript.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-green-400">BeautifulSoup: The HTML Parser</h3>
+                                <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
+                                    <li>Creates a traversable **parse tree** from the raw HTML.</li>
+                                    <li>Excellent for targeting elements by tag, class, or ID.</li>
+                                    <li>Requires the HTML content to be fully rendered (static).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6: CODE: REQUESTS -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-teal-400">5. Demo: Fetching the HTML</h2>
+                        <div class="w-full h-auto flex min-h-0">
+                            <pre class="code-block w-full">
+                                <div class="code-header">
+                                    <div class="window-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+                                    <span class="ml-4 font-medium text-sm text-gray-400">request_fetch.py</span>
+                                </div>
+                                <code class="code-body">
+<span class="token-keyword">import</span> requests
+
+<span class="token-variable">URL</span> = <span class="token-string">"https://books.toscrape.com/index.html"</span>
+<span class="token-variable">HEADERS</span> = {<span class="token-string">'User-Agent'</span>: <span class="token-string">'Mozilla/5.0'</span>} <span class="token-comment"># Good practice!</span>
+
+<span class="token-keyword">try</span>:
+    <span class="token-variable">response</span> = requests.<span class="token-function">get</span>(URL, headers=HEADERS, timeout=<span class="token-number">5</span>)
+    response.<span class="token-function">raise_for_status</span>() <span class="token-comment"># Raises HTTPError for bad responses (4xx or 5xx)</span>
+    
+    <span class="token-function">print</span>(<span class="token-string">f"Status Code: {response.status_code}"</span>)
+    <span class="token-function">print</span>(<span class="token-string">"--- HTML Snippet ---"</span>)
+    <span class="token-function">print</span>(response.text[:<span class="token-number">500</span>])
+
+<span class="token-keyword">except</span> requests.exceptions.RequestException <span class="token-keyword">as</span> e:
+    <span class="token-function">print</span>(<span class="token-string">f"Request failed: {e}"</span>)
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7: PARSING WITH CSS SELECTORS -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">6. Parsing: Mastering CSS Selectors</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Selector Syntax Examples</h3>
+                                <ul class="list-none space-y-3 text-gray-700">
+                                    <li class="font-mono bg-gray-100 p-2 rounded"><code>.product_pod</code> &rarr; Selects by class name.</li>
+                                    <li class="font-mono bg-gray-100 p-2 rounded"><code>#product_page</code> &rarr; Selects by ID.</li>
+                                    <li class="font-mono bg-gray-100 p-2 rounded"><code>li.col-xs-6 a</code> &rarr; Nested elements (all 'a' inside 'li' with class 'col-xs-6').</li>
+                                    <li class="font-mono bg-gray-100 p-2 rounded"><code>img[alt="A Light"]</code> &rarr; Elements with a specific attribute value.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">BeautifulSoup Selector Code</h3>
+                                <div class="p-4 bg-gray-100 rounded-lg">
+                                    <pre class="font-mono text-sm text-gray-700">
+<span class="token-variable">soup</span> = BeautifulSoup(html, <span class="token-string">'html.parser'</span>)
+<span class="token-comment"># Find all product containers</span>
+<span class="token-variable">products</span> = soup.<span class="token-function">select</span>(<span class="token-string">'.product_pod'</span>) 
+
+<span class="token-comment"># Extract price from the first product</span>
+<span class="token-variable">price</span> = products[<span class="token-number">0</span>].<span class="token-function">select_one</span>(<span class="token-string">'.price_color'</span>).text
+                                    </pre>
+                                </div>
+                                <p class="mt-3 text-sm text-gray-600">The `select()` method uses CSS selectors for targeting.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8: DATA CLEANING -->
+                <div class="slide bg-gray-50 flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">7. Data Cleaning: Regular Expressions</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">The Cleaning Challenge</h3>
+                                <p class="text-gray-600 mb-4">Raw text often contains unwanted characters, leading to corrupted data. Example: extracting numerical prices.</p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>**Raw:** `£51.77`</li>
+                                    <li>**Raw:** `In stock (12 available)`</li>
+                                    <li>**Goal:** `51.77` and `12` (pure numbers).</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-lg">
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Python RegEx (`re` module)</h3>
+                                <pre class="font-mono text-sm bg-gray-100 p-3 rounded">
+<span class="token-keyword">import</span> re
+
+<span class="token-variable">raw_price</span> = <span class="token-string">'Price: £51.77'</span>
+
+<span class="token-comment"># Pattern: find numbers and decimal points</span>
+<span class="token-variable">pattern</span> = <span class="token-string">r'\d+\.?\d*'</span>
+
+<span class="token-variable">match</span> = re.<span class="token-function">search</span>(pattern, raw_price)
+<span class="token-keyword">if</span> match:
+    <span class="token-function">print</span>(match.<span class="token-function">group</span>(<span class="token-number">0</span>)) <span class="token-comment"># Output: 51.77</span>
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9: THE NEED FOR DYNAMIC SCRAPING -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content text-center">
+                        <h2 class="text-4xl font-bold mb-6 text-teal-400">8. The JavaScript Barrier</h2>
+                        <p class="text-xl font-light mb-10 text-gray-300">
+                            When a site loads data *after* the initial HTML (using AJAX or Fetch), static scrapers fail.
+                        </p>
+                        <div class="w-full max-w-2xl mx-auto p-6 bg-gray-800 rounded-xl border-l-4 border-red-500">
+                            <h3 class="text-2xl font-bold mb-3 text-red-400">Single Page Applications (SPAs)</h3>
+                            <p class="text-gray-300">Frameworks like React, Vue, and Angular rely on client-side rendering. The HTML returned by the `requests` library is empty or incomplete.</p>
+                            <p class="text-sm mt-3 text-gray-500">Solution: Use a Headless Browser.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10: HEADLESS BROWSERS -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">9. Dynamic Scraping: Headless Browsers</h2>
+                        <div class="grid grid-cols-3 gap-8 text-center">
+                            <div class="p-4 rounded-lg shadow-md bg-gray-100">
+                                <h3 class="text-2xl font-semibold text-blue-700 mb-2">Puppeteer (Node.js)</h3>
+                                <p class="text-gray-600 text-sm">Controls Chrome/Chromium. Excellent API for complex interactions.</p>
+                            </div>
+                            <div class="p-4 rounded-lg shadow-md bg-gray-100">
+                                <h3 class="text-2xl font-semibold text-indigo-700 mb-2">Playwright (Multi-Lang)</h3>
+                                <p class="text-gray-600 text-sm">Supports Chromium, Firefox, and WebKit. Available in Python, JS, Java, etc.</p>
+                            </div>
+                            <div class="p-4 rounded-lg shadow-md bg-gray-100">
+                                <h3 class="text-2xl font-semibold text-green-700 mb-2">Selenium (Legacy/Testing)</h3>
+                                <p class="text-gray-600 text-sm">Originally for testing, still used for cross-browser, deep interaction.</p>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-lg text-gray-700">
+                            Headless browsers fully **render the page** (executing all JavaScript) before we extract the final HTML content.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 11: CODE: PUPPETEER SETUP -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-teal-400">10. Demo: Headless Browser (Node.js/Puppeteer)</h2>
+                        <div class="w-full h-auto flex min-h-0">
+                            <pre class="code-block w-full">
+                                <div class="code-header">
+                                    <div class="window-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+                                    <span class="ml-4 font-medium text-sm text-gray-400">puppeteer_setup.js</span>
+                                </div>
+                                <code class="code-body">
+<span class="token-keyword">const</span> puppeteer = <span class="token-function">require</span>(<span class="token-string">'puppeteer'</span>);
+
+<span class="token-function">async function</span> <span class="token-function-name">scrapeDynamicPage</span>() {
+  <span class="token-comment">// 1. Launch a new headless browser instance</span>
+  <span class="token-keyword">const</span> browser = <span class="token-keyword">await</span> puppeteer.<span class="token-function">launch</span>({ <span class="token-variable">headless</span>: <span class="token-literal">true</span> });
+  <span class="token-keyword">const</span> page = <span class="token-keyword">await</span> browser.<span class="token-function">newPage</span>();
+
+  <span class="token-comment">// 2. Navigate and wait for all network requests to finish</span>
+  <span class="token-keyword">await</span> page.<span class="token-function">goto</span>(<span class="token-string">'https://example.com/dynamic-data'</span>, {
+    <span class="token-variable">waitUntil</span>: <span class="token-string">'networkidle0'</span>, <span class="token-comment">// Wait until network is idle</span>
+  });
+
+  <span class="token-comment">/* ... Extraction code goes here ... */</span>
+
+  <span class="token-keyword">await</span> browser.<span class="token-function">close</span>();
+}
+
+<span class="token-function">scrapeDynamicPage</span>();
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12: WAITING STRATEGIES -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">11. The Art of Waiting (Dynamic Content)</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">1. WaitForSelector (Recommended)</h3>
+                                <p class="text-gray-600">The most reliable method: wait until a specific data-bearing element appears in the DOM.</p>
+                                <pre class="font-mono text-sm bg-gray-100 p-3 rounded mt-2">
+<span class="token-keyword">await</span> page.<span class="token-function">waitForSelector</span>(<span class="token-string">'.results-table'</span>);
+                                </pre>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">2. WaitForTimeout (Avoid)</h3>
+                                <p class="text-gray-600">A fixed, brute-force delay. Unreliable and inefficient.</p>
+                                <pre class="font-mono text-sm bg-gray-100 p-3 rounded mt-2">
+<span class="token-comment">// Use only as a last resort or for simple tests</span>
+<span class="token-keyword">await</span> page.<span class="token-function">waitForTimeout</span>(<span class="token-number">3000</span>);
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13: INTERACTION AND AUTOMATION -->
+                <div class="slide bg-gray-50 flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">12. Full Automation: Interacting with the UI</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">User Actions (Puppeteer/Playwright)</h3>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>**Typing:** `page.type('#username', 'myuser')`</li>
+                                    <li>**Clicking:** `page.click('button.submit-btn')`</li>
+                                    <li>**Dropdowns:** `page.select('select#city', 'London')`</li>
+                                    <li>**Scrolling:** `page.evaluate(() => window.scrollBy(0, 500))` (for lazy-loaded content)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Page Evaluation</h3>
+                                <p class="text-gray-600">Run custom JavaScript directly within the browser context to extract data that is hard to get with selectors alone.</p>
+                                <pre class="font-mono text-sm bg-white p-3 rounded mt-2 shadow">
+<span class="token-keyword">const</span> data = <span class="token-keyword">await</span> page.<span class="token-function">evaluate</span>(() => {
+    <span class="token-keyword">return</span> <span class="token-function">JSON</span>.<span class="token-function">parse</span>(
+        <span class="token-function">document</span>.<span class="token-function">getElementById</span>(<span class="token-string">'app-data'</span>).textContent
+    );
+});
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14: INTRODUCTION TO SCRAPY -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-teal-400">13. Scaling Up: The Scrapy Framework</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-400">What is Scrapy?</h3>
+                                <p class="text-gray-300">A complete, high-level **Python framework** for web crawling and scraping. It's not just a library; it's an architecture.</p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-300 mt-4 ml-4">
+                                    <li>Built-in **Asynchronous** I/O (Twisted).</li>
+                                    <li>Handles threading, request queues, and duplicate filtering.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-green-400">Key Scrapy Components</h3>
+                                <ul class="list-none space-y-2 text-gray-300">
+                                    <li>**Spiders:** The custom classes that define the scraping logic.</li>
+                                    <li>**Scheduler:** Decides when to make the next request.</li>
+                                    <li>**Downloader:** Fetches pages from the web.</li>
+                                    <li>**Item Pipelines:** Process and store the scraped data.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15: CONCURRENCY -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">14. Performance: Concurrency and Asynchronous I/O</h2>
+                        <p class="text-lg text-gray-700 mb-6">Traditional scraping is blocking: waiting for the server to respond wastes time. **Asynchronous I/O** allows the scraper to send multiple requests simultaneously.</p>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="p-4 rounded-lg bg-red-50 border-l-4 border-red-500">
+                                <h3 class="text-2xl font-semibold text-red-700 mb-2">Blocking (Sequential)</h3>
+                                <p class="text-gray-700">Request 1 finishes $\rightarrow$ Request 2 starts $\rightarrow$ Request 3 starts.</p>
+                                <p class="mt-2 text-sm text-gray-500">Total time = Sum of all request times.</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-green-50 border-l-4 border-green-500">
+                                <h3 class="text-2xl font-semibold text-green-700 mb-2">Non-Blocking (Async)</h3>
+                                <p class="text-gray-700">Request 1, 2, and 3 start almost simultaneously and wait concurrently.</p>
+                                <p class="mt-2 text-sm text-gray-500">Total time $\approx$ Time of the slowest request.</p>
+                            </div>
+                        </div>
+                        <p class="mt-6 text-base text-gray-600">
+                            Python's `asyncio` and libraries like `httpx` (async requests) are essential here. Scrapy handles this automatically.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 16: DISTRIBUTED SCRAPING -->
+                <div class="slide bg-gray-50 flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">15. Distributed Crawling</h2>
+                        <p class="text-lg text-gray-700 mb-6">When one machine is not enough, we distribute the workload across a cluster.</p>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h3 class="text-2xl font-semibold text-teal-700 mb-2">Queue/Broker System</h3>
+                                <p class="text-gray-600">Use a message broker (like **Redis** or **RabbitMQ**) to hold URLs. Multiple worker machines pull URLs and push results back.</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h3 class="text-2xl font-semibold text-teal-700 mb-2">Scrapyd & Docker</h3>
+                                <p class="text-gray-600">Scrapyd runs Scrapy spiders as a service. Containerize (Docker) your spiders for easy deployment across a server cluster.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 17: CLOUD ARCHITECTURE -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-teal-400">16. Cloud Architecture for Scraping</h2>
+                        <div class="grid grid-cols-3 gap-6 text-center">
+                            <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-indigo-500">
+                                <p class="text-xl font-bold mb-2">Worker Nodes</p>
+                                <p class="text-gray-400 text-sm">EC2, DigitalOcean Droplets, or Kubernetes Pods running the scraping logic.</p>
+                            </div>
+                            <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-indigo-500">
+                                <p class="text-xl font-bold mb-2">Scheduling</p>
+                                <p class="text-gray-400 text-sm">Cron Jobs or Serverless functions (**AWS Lambda, Azure Functions**) to trigger the spiders on a timetable.</p>
+                            </div>
+                            <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-indigo-500">
+                                <p class="text-xl font-bold mb-2">Data Storage</p>
+                                <p class="text-gray-400 text-sm">PostgreSQL/MySQL for structured data, S3/GCS for raw HTML archives or large files.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 18: ANTI-SCRAPING OVERVIEW -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">17. Dealing with Anti-Scraping Measures</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Server-Side Protections</h3>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>**IP Blocking:** Monitoring requests per IP address.</li>
+                                    <li>**User-Agent Filtering:** Blocking common library User-Agents (e.g., `python-requests/2.28.1`).</li>
+                                    <li>**Honeypot Traps:** Invisible links that signal a bot when clicked.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Client-Side Protections</h3>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>**CAPTCHAs:** Preventing automated access (e.g., reCAPTCHA, hCaptcha).</li>
+                                    <li>**Obfuscated HTML/CSS:** Dynamic, randomly changing element IDs and classes.</li>
+                                    <li>**Behavioral Analysis:** Checking for mouse movements, click patterns, and loading times.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 19: IP ROTATION -->
+                <div class="slide bg-gray-50 flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">18. Evasion Technique 1: IP Rotation (Proxies)</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Why Proxies?</h3>
+                                <p class="text-gray-700">When your primary IP gets throttled or banned, proxies allow you to switch to a new IP address for each request or after a few requests.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Proxy Types</h3>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>**Datacenter:** Fast but easily detected.</li>
+                                    <li>**Residential:** Uses real user IPs; more expensive but much harder to block.</li>
+                                    <li>**Rotating:** A service handles the switching automatically.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 20: USER AGENTS AND HEADERS -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-teal-400">19. Evasion Technique 2: User-Agent Spoofing</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-400">The User-Agent Header</h3>
+                                <p class="text-gray-300">This header identifies the client software (browser, OS) making the request. Bots use generic, non-browser UAs and are easily flagged.</p>
+                                <pre class="font-mono text-xs bg-gray-800 p-2 rounded mt-2">
+<span class="token-comment"># BAD:</span> python-requests/2.28.1
+<span class="token-comment"># GOOD:</span> Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
+                                </pre>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-green-400">Best Practice: Rotation</h3>
+                                <p class="text-gray-300">Maintain a list of **100+ real, modern User-Agents** and randomly select one for each request.</p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-300 mt-4 ml-4">
+                                    <li>Also spoof `Accept-Encoding`, `Accept-Language`, and `Referer` headers.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 21: HONEYPOT TRAPS -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">20. Evasion Technique 3: Avoiding Honeypots</h2>
+                        <p class="text-lg text-gray-700 mb-6">A honeypot is an element visible to a bot but invisible to a human user (via CSS: `display: none`).</p>
+                        <div class="p-4 bg-red-100 rounded-lg border-l-4 border-red-600 shadow-md">
+                            <h3 class="text-2xl font-semibold text-red-700 mb-2">The Rule</h3>
+                            <p class="text-gray-700">When scraping links, **always filter them** based on visibility. If a link has `display: none`, `visibility: hidden`, or zero size, a bot should **never** click or follow it.</p>
+                        </div>
+                        <p class="mt-6 text-sm text-gray-600">
+                            **Failure to avoid a honeypot guarantees an instant ban/block.**
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 22: CAPTCHAS -->
+                <div class="slide bg-gray-50 flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">21. Handling CAPTCHAs</h2>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">The Problem</h3>
+                                <p class="text-gray-700">Modern CAPTCHAs (reCAPTCHA v3, hCaptcha) analyze browser behavior and traffic patterns, making simple image recognition obsolete.</p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 mt-4 ml-4">
+                                    <li>**Goal:** Prove you are human, not a bot.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold mb-3 text-gray-800">Solutions</h3>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>**Pre-solved Tokens:** Use third-party services (e.g., 2Captcha, Anti-Captcha) to solve the challenge programmatically.</li>
+                                    <li>**Human Solving:** Integrate with services that pay humans to solve them in real-time.</li>
+                                    <li>**Avoidance:** Scrape the API endpoint *before* the CAPTCHA step, if possible.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 23: DATA PERSISTENCE -->
+                <div class="slide bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-teal-400">22. Data Storage: Persistence is Key</h2>
+                        <div class="grid grid-cols-3 gap-6 text-center">
+                            <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-blue-500">
+                                <p class="text-xl font-bold mb-2">SQL (PostgreSQL, MySQL)</p>
+                                <p class="text-gray-400 text-sm">Best for highly structured, relational data (e.g., product linked to a category).</p>
+                            </div>
+                            <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-green-500">
+                                <p class="text-xl font-bold mb-2">NoSQL (MongoDB, Firestore)</p>
+                                <p class="text-gray-400 text-sm">Best for flexible, document-based data (e.g., diverse blog post fields).</p>
+                            </div>
+                            <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-yellow-500">
+                                <p class="text-xl font-bold mb-2">File Storage (S3, GCS)</p>
+                                <p class="text-gray-400 text-sm">Best for storing raw HTML archives, images, or large CSV dumps.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 24: DATA INTEGRITY -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">23. Ensuring Data Integrity and Quality</h2>
+                        <ul class="list-disc list-inside space-y-4 text-gray-700 ml-4">
+                            <li class="font-semibold">Schema Validation: Ensure every scraped item has the expected fields (price, title, URL) and data types (number, string).</li>
+                            <li class="font-semibold">Duplicate Detection: Use unique identifiers (e.g., product ID from the URL) to prevent saving the same record multiple times.</li>
+                            <li class="font-semibold">Missing Data Handling: Implement logic to handle when an element is not found, substituting a default value (e.g., 0 or 'N/A') instead of crashing.</li>
+                            <li class="font-semibold">Monitoring: Set up alerts if the scraper fails or if the volume of collected data suddenly drops (signaling a block).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 25: FUTURE TRENDS -->
+                <div class="slide flex-col text-center bg-teal-gradient text-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-5xl font-extrabold mb-8">24. The Future: LLMs and AI in Scraping</h2>
+                        <div class="flex flex-col items-center space-y-4">
+                            <p class="text-3xl font-light mb-6 opacity-90">
+                                Generative models are simplifying the *parsing* step.
+                            </p>
+                            <div class="w-full max-w-xl p-6 bg-white bg-opacity-10 rounded-xl border border-white border-opacity-30">
+                                <p class="text-xl font-semibold mb-2 text-teal-200">Zero-Shot Extraction</p>
+                                <p class="text-gray-300">LLMs can read raw HTML and instantly extract structured JSON data without writing a single CSS or XPath selector.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 26: SUMMARY -->
+                <div class="slide bg-white flex-1">
+                    <div class="slide-content">
+                        <h2 class="text-4xl font-bold mb-8 text-accent">25. Summary: Key Takeaways</h2>
+                        <ul class="list-decimal list-inside space-y-3 text-gray-700 ml-4 text-lg">
+                            <li>**Ethics First:** Always check `robots.txt` and respect server load.</li>
+                            <li>**Choose the Right Tool:** Requests/BeautifulSoup for static; Puppeteer/Scrapy for dynamic and scale.</li>
+                            <li>**Master Selectors:** CSS and XPath are the language of parsing.</li>
+                            <li>**Anticipate Blocks:** Use IP/User-Agent rotation and implement robust error handling.</li>
+                            <li>**Build to Scale:** Use asynchronous and distributed architectures for large projects.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 27: Q&A -->
+                <div class="slide flex-col text-center bg-gray-900 flex-1 text-white">
+                    <div class="slide-content">
+                        <h2 class="text-6xl font-extrabold mb-6 text-teal-400">26. Thank You!</h2>
+                        <p class="text-3xl font-light mb-12 opacity-80">
+                            Now, let's unlock some data.
+                        </p>
+                        
+                        <div class="w-full max-w-xl mx-auto p-8 bg-gray-800 rounded-lg shadow-2xl border-t-4 border-teal-500">
+                            <h3 class="text-3xl font-semibold mb-4 text-gray-200">Questions & Discussion</h3>
+                            <p class="text-lg text-gray-400">
+                                What is the most challenging site you've tried to scrape?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Navigation Controls -->
+        <footer class="p-4 bg-gray-900 border-t border-gray-700 flex justify-center space-x-4">
+            <button id="prev-btn" class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 shadow-lg disabled:bg-gray-700 disabled:text-gray-500" disabled>
+                &larr; Previous
+            </button>
+            <button id="next-btn" class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 shadow-lg">
+                Next &rarr;
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = Array.from(document.querySelectorAll('.slide'));
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlideIndex = 0;
+            const totalSlides = slides.length;
+
+            /**
+             * Updates the visibility of slides and the state of navigation buttons.
+             */
+            function updateSlide() {
+                // 1. Update visibility (use requestAnimationFrame for smoother transition if slides were CSS-animated)
+                slides.forEach((slide, index) => {
+                    if (index === currentSlideIndex) {
+                        slide.classList.add('slide--active');
+                    } else {
+                        slide.classList.remove('slide--active');
+                    }
+                });
+
+                // 2. Update button states
+                prevBtn.disabled = currentSlideIndex === 0;
+                nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+
+                // 3. Update counter
+                slideCounter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+            }
+
+            /**
+             * Handler for the next button click.
+             */
+            function goToNextSlide() {
+                if (currentSlideIndex < totalSlides - 1) {
+                    currentSlideIndex++;
+                    updateSlide();
+                }
+            }
+
+            /**
+             * Handler for the previous button click.
+             */
+            function goToPrevSlide() {
+                if (currentSlideIndex > 0) {
+                    currentSlideIndex--;
+                    updateSlide();
+                }
+            }
+
+            // Attach event listeners
+            nextBtn.addEventListener('click', goToNextSlide);
+            prevBtn.addEventListener('click', goToPrevSlide);
+
+            // Optional: Keyboard navigation (Arrow Keys)
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowRight') {
+                    goToNextSlide();
+                } else if (event.key === 'ArrowLeft') {
+                    goToPrevSlide();
+                }
+            });
+
+            // Initial setup
+            updateSlide();
+        });
+    </script>
+</body>
+</html>
