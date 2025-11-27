@@ -160,7 +160,9 @@
                         <div class="grid grid-cols-2 gap-8">
                             <div class="p-4 bg-red-100 rounded-lg border-l-4 border-red-600">
                                 <h3 class="text-2xl font-semibold text-red-700 mb-2">Respect Robots.txt</h3>
-                                <p class="text-gray-700">Always check <code>/robots.txt</code> for `Disallow` rules. If a page is disallowed, **do not scrape it.**</p>
+                                <p class="text-gray-700">Always check
+                                <code>/robots.txt</code> for `Disallow` rules.
+                                    If a page is disallowed, <strong>do not scrape it.</strong></p>
                             </div>
                             <div class="p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-600">
                                 <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Minimize Server Load (Rate Limiting)</h3>
@@ -172,7 +174,8 @@
                             </div>
                             <div class="p-4 bg-green-100 rounded-lg border-l-4 border-green-600">
                                 <h3 class="text-2xl font-semibold text-green-700 mb-2">Privacy & PII</h3>
-                                <p class="text-gray-700">Never extract **Personally Identifiable Information (PII)** or sensitive data without explicit consent.</p>
+                                <p class="text-gray-700">Never extract
+                                <strong>Personally Identifiable Information (PII)</strong> or sensitive data without explicit consent.</p>
                             </div>
                         </div>
                     </div>
@@ -214,7 +217,7 @@
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-blue-400">Requests: The HTTP Client</h3>
                                 <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
-                                    <li>Makes simple **GET/POST** requests to receive raw HTML.</li>
+                                    <li>Makes simple <strong>GET/POST</strong> requests to receive raw HTML.</li>
                                     <li>Handles headers, cookies, and basic authentication easily.</li>
                                     <li>Cannot execute JavaScript.</li>
                                 </ul>
@@ -222,7 +225,8 @@
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-green-400">BeautifulSoup: The HTML Parser</h3>
                                 <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
-                                    <li>Creates a traversable **parse tree** from the raw HTML.</li>
+                                    <li>Creates a traversable <strong>parse
+                                        tree</strong> from the raw HTML.</li>
                                     <li>Excellent for targeting elements by tag, class, or ID.</li>
                                     <li>Requires the HTML content to be fully rendered (static).</li>
                                 </ul>
@@ -304,9 +308,9 @@
                                 <h3 class="text-2xl font-semibold mb-3 text-gray-800">The Cleaning Challenge</h3>
                                 <p class="text-gray-600 mb-4">Raw text often contains unwanted characters, leading to corrupted data. Example: extracting numerical prices.</p>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                                    <li>**Raw:** `£51.77`</li>
-                                    <li>**Raw:** `In stock (12 available)`</li>
-                                    <li>**Goal:** `51.77` and `12` (pure numbers).</li>
+                                    <li><strong>Raw:</strong> `£51.77`</li>
+                                    <li><strong>Raw:</strong> `In stock (12 available)`</li>
+                                    <li><strong>Goal:</strong> `51.77` and `12` (pure numbers).</li>
                                 </ul>
                             </div>
                             <div class="p-4 bg-white rounded-lg shadow-lg">
@@ -362,7 +366,7 @@
                             </div>
                         </div>
                         <p class="mt-8 text-lg text-gray-700">
-                            Headless browsers fully **render the page** (executing all JavaScript) before we extract the final HTML content.
+                            Headless browsers fully <strong>render the page</strong> (executing all JavaScript) before we extract the final HTML content.
                         </p>
                     </div>
                 </div>
@@ -434,10 +438,10 @@
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-gray-800">User Actions (Puppeteer/Playwright)</h3>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                                    <li>**Typing:** `page.type('#username', 'myuser')`</li>
-                                    <li>**Clicking:** `page.click('button.submit-btn')`</li>
-                                    <li>**Dropdowns:** `page.select('select#city', 'London')`</li>
-                                    <li>**Scrolling:** `page.evaluate(() => window.scrollBy(0, 500))` (for lazy-loaded content)</li>
+                                    <li><strong>Typing:</strong> `page.type('#username', 'myuser')`</li>
+                                    <li><strong>Clicking:</strong> `page.click('button.submit-btn')`</li>
+                                    <li><strong>Dropdowns:</strong> `page.select('select#city', 'London')`</li>
+                                    <li><strong>Scrolling:</strong> `page.evaluate(() => window.scrollBy(0, 500))` (for lazy-loaded content)</li>
                                 </ul>
                             </div>
                             <div>
@@ -462,19 +466,20 @@
                         <div class="grid grid-cols-2 gap-8">
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-blue-400">What is Scrapy?</h3>
-                                <p class="text-gray-300">A complete, high-level **Python framework** for web crawling and scraping. It's not just a library; it's an architecture.</p>
+                                <p class="text-gray-300">A complete, high-level
+                                <strong>Python framework</strong> for web crawling and scraping. It's not just a library; it's an architecture.</p>
                                 <ul class="list-disc list-inside space-y-2 text-gray-300 mt-4 ml-4">
-                                    <li>Built-in **Asynchronous** I/O (Twisted).</li>
+                                    <li>Built-in <strong>Asynchronous</strong> I/O (Twisted).</li>
                                     <li>Handles threading, request queues, and duplicate filtering.</li>
                                 </ul>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-green-400">Key Scrapy Components</h3>
                                 <ul class="list-none space-y-2 text-gray-300">
-                                    <li>**Spiders:** The custom classes that define the scraping logic.</li>
-                                    <li>**Scheduler:** Decides when to make the next request.</li>
-                                    <li>**Downloader:** Fetches pages from the web.</li>
-                                    <li>**Item Pipelines:** Process and store the scraped data.</li>
+                                    <li><strong>Spiders:</strong> The custom classes that define the scraping logic.</li>
+                                    <li><strong>Scheduler:</strong> Decides when to make the next request.</li>
+                                    <li><strong>Downloader:</strong> Fetches pages from the web.</li>
+                                    <li><strong>Item Pipelines:</strong> Process and store the scraped data.</li>
                                 </ul>
                             </div>
                         </div>
@@ -485,7 +490,9 @@
                 <div class="slide bg-white flex-1">
                     <div class="slide-content">
                         <h2 class="text-4xl font-bold mb-8 text-accent">14. Performance: Concurrency and Asynchronous I/O</h2>
-                        <p class="text-lg text-gray-700 mb-6">Traditional scraping is blocking: waiting for the server to respond wastes time. **Asynchronous I/O** allows the scraper to send multiple requests simultaneously.</p>
+                        <p class="text-lg text-gray-700 mb-6">Traditional
+                        scraping is blocking: waiting for the server to respond
+                            wastes time. <strong>Asynchronous I/O</strong> allows the scraper to send multiple requests simultaneously.</p>
                         <div class="grid grid-cols-2 gap-8">
                             <div class="p-4 rounded-lg bg-red-50 border-l-4 border-red-500">
                                 <h3 class="text-2xl font-semibold text-red-700 mb-2">Blocking (Sequential)</h3>
@@ -512,7 +519,9 @@
                         <div class="grid grid-cols-2 gap-8">
                             <div class="p-4 bg-white rounded-lg shadow-md">
                                 <h3 class="text-2xl font-semibold text-teal-700 mb-2">Queue/Broker System</h3>
-                                <p class="text-gray-600">Use a message broker (like **Redis** or **RabbitMQ**) to hold URLs. Multiple worker machines pull URLs and push results back.</p>
+                                <p class="text-gray-600">Use a message broker
+                                (like <strong>Redis</strong> or
+                                <strong>RabbitMQ</strong>) to hold URLs. Multiple worker machines pull URLs and push results back.</p>
                             </div>
                             <div class="p-4 bg-white rounded-lg shadow-md">
                                 <h3 class="text-2xl font-semibold text-teal-700 mb-2">Scrapyd & Docker</h3>
@@ -533,7 +542,9 @@
                             </div>
                             <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-indigo-500">
                                 <p class="text-xl font-bold mb-2">Scheduling</p>
-                                <p class="text-gray-400 text-sm">Cron Jobs or Serverless functions (**AWS Lambda, Azure Functions**) to trigger the spiders on a timetable.</p>
+                                <p class="text-gray-400 text-sm">Cron Jobs or
+                                Serverless functions (<strong>AWS Lambda, Azure
+                                    Functions</strong>) to trigger the spiders on a timetable.</p>
                             </div>
                             <div class="p-5 bg-gray-800 rounded-lg shadow-lg border-t-4 border-indigo-500">
                                 <p class="text-xl font-bold mb-2">Data Storage</p>
@@ -551,17 +562,17 @@
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-gray-800">Server-Side Protections</h3>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                                    <li>**IP Blocking:** Monitoring requests per IP address.</li>
-                                    <li>**User-Agent Filtering:** Blocking common library User-Agents (e.g., `python-requests/2.28.1`).</li>
-                                    <li>**Honeypot Traps:** Invisible links that signal a bot when clicked.</li>
+                                    <li><strong>IP Blocking:</strong> Monitoring requests per IP address.</li>
+                                    <li><strong>User-Agent Filtering:</strong> Blocking common library User-Agents (e.g., `python-requests/2.28.1`).</li>
+                                    <li><strong>Honeypot Traps:</strong> Invisible links that signal a bot when clicked.</li>
                                 </ul>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-gray-800">Client-Side Protections</h3>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                                    <li>**CAPTCHAs:** Preventing automated access (e.g., reCAPTCHA, hCaptcha).</li>
-                                    <li>**Obfuscated HTML/CSS:** Dynamic, randomly changing element IDs and classes.</li>
-                                    <li>**Behavioral Analysis:** Checking for mouse movements, click patterns, and loading times.</li>
+                                    <li><strong>CAPTCHAs:</strong> Preventing automated access (e.g., reCAPTCHA, hCaptcha).</li>
+                                    <li><strong>Obfuscated HTML/CSS:</strong> Dynamic, randomly changing element IDs and classes.</li>
+                                    <li><strong>Behavioral Analysis:</strong> Checking for mouse movements, click patterns, and loading times.</li>
                                 </ul>
                             </div>
                         </div>
@@ -580,9 +591,9 @@
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-gray-800">Proxy Types</h3>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                                    <li>**Datacenter:** Fast but easily detected.</li>
-                                    <li>**Residential:** Uses real user IPs; more expensive but much harder to block.</li>
-                                    <li>**Rotating:** A service handles the switching automatically.</li>
+                                    <li><strong>Datacenter:</strong> Fast but easily detected.</li>
+                                    <li><strong>Residential:</strong> Uses real user IPs; more expensive but much harder to block.</li>
+                                    <li><strong>Rotating:</strong> A service handles the switching automatically.</li>
                                 </ul>
                             </div>
                         </div>
@@ -604,7 +615,8 @@
                             </div>
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-green-400">Best Practice: Rotation</h3>
-                                <p class="text-gray-300">Maintain a list of **100+ real, modern User-Agents** and randomly select one for each request.</p>
+                                <p class="text-gray-300">Maintain a list of
+                                <strong>100+ real, modern User-Agents</strong> and randomly select one for each request.</p>
                                 <ul class="list-disc list-inside space-y-2 text-gray-300 mt-4 ml-4">
                                     <li>Also spoof `Accept-Encoding`, `Accept-Language`, and `Referer` headers.</li>
                                 </ul>
@@ -620,10 +632,15 @@
                         <p class="text-lg text-gray-700 mb-6">A honeypot is an element visible to a bot but invisible to a human user (via CSS: `display: none`).</p>
                         <div class="p-4 bg-red-100 rounded-lg border-l-4 border-red-600 shadow-md">
                             <h3 class="text-2xl font-semibold text-red-700 mb-2">The Rule</h3>
-                            <p class="text-gray-700">When scraping links, **always filter them** based on visibility. If a link has `display: none`, `visibility: hidden`, or zero size, a bot should **never** click or follow it.</p>
+                            <p class="text-gray-700">When scraping links,
+                            <strong>always filter them</strong> based on
+                            visibility. If a link has `display: none`,
+                                `visibility: hidden`, or zero size, a bot should
+                                <strong>never</strong> click or follow it.</p>
                         </div>
                         <p class="mt-6 text-sm text-gray-600">
-                            **Failure to avoid a honeypot guarantees an instant ban/block.**
+                            <strong>Failure to avoid a honeypot guarantees an
+                              instant ban/block.</strong>
                         </p>
                     </div>
                 </div>
@@ -637,15 +654,15 @@
                                 <h3 class="text-2xl font-semibold mb-3 text-gray-800">The Problem</h3>
                                 <p class="text-gray-700">Modern CAPTCHAs (reCAPTCHA v3, hCaptcha) analyze browser behavior and traffic patterns, making simple image recognition obsolete.</p>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 mt-4 ml-4">
-                                    <li>**Goal:** Prove you are human, not a bot.</li>
+                                    <li><strong>Goal:</strong> Prove you are human, not a bot.</li>
                                 </ul>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-semibold mb-3 text-gray-800">Solutions</h3>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                                    <li>**Pre-solved Tokens:** Use third-party services (e.g., 2Captcha, Anti-Captcha) to solve the challenge programmatically.</li>
-                                    <li>**Human Solving:** Integrate with services that pay humans to solve them in real-time.</li>
-                                    <li>**Avoidance:** Scrape the API endpoint *before* the CAPTCHA step, if possible.</li>
+                                    <li><strong>Pre-solved Tokens:</strong> Use third-party services (e.g., 2Captcha, Anti-Captcha) to solve the challenge programmatically.</li>
+                                    <li><strong>Human Solving:</strong> Integrate with services that pay humans to solve them in real-time.</li>
+                                    <li><strong>Avoidance:</strong> Scrape the API endpoint *before* the CAPTCHA step, if possible.</li>
                                 </ul>
                             </div>
                         </div>
@@ -707,11 +724,11 @@
                     <div class="slide-content">
                         <h2 class="text-4xl font-bold mb-8 text-accent">25. Summary: Key Takeaways</h2>
                         <ul class="list-decimal list-inside space-y-3 text-gray-700 ml-4 text-lg">
-                            <li>**Ethics First:** Always check `robots.txt` and respect server load.</li>
-                            <li>**Choose the Right Tool:** Requests/BeautifulSoup for static; Puppeteer/Scrapy for dynamic and scale.</li>
-                            <li>**Master Selectors:** CSS and XPath are the language of parsing.</li>
-                            <li>**Anticipate Blocks:** Use IP/User-Agent rotation and implement robust error handling.</li>
-                            <li>**Build to Scale:** Use asynchronous and distributed architectures for large projects.</li>
+                            <li><strong>Ethics First:</strong> Always check `robots.txt` and respect server load.</li>
+                            <li><strong>Choose the Right Tool:</strong> Requests/BeautifulSoup for static; Puppeteer/Scrapy for dynamic and scale.</li>
+                            <li><strong>Master Selectors:</strong> CSS and XPath are the language of parsing.</li>
+                            <li><strong>Anticipate Blocks:</strong> Use IP/User-Agent rotation and implement robust error handling.</li>
+                            <li><strong>Build to Scale:</strong> Use asynchronous and distributed architectures for large projects.</li>
                         </ul>
                     </div>
                 </div>
